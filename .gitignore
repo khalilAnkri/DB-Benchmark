@@ -1,0 +1,18 @@
+# Generated TPC-H data (several GB, can be regenerated with dbgen)
+data/*
+!data/.gitkeep
+*.tbl
+
+# The dbgen source, cloned separately
+tpch-kit/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store

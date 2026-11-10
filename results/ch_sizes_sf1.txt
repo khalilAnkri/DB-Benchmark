@@ -1,0 +1,8 @@
+   ┌─tbl────────┬─compressed─┬─uncompressed─┐
+1. │ b.lineitem │ 298.96 MiB │ 794.26 MiB   │
+2. │ b.orders   │ 65.38 MiB  │ 175.83 MiB   │
+3. │ b.part     │ 10.70 MiB  │ 30.60 MiB    │
+4. │ d.lineitem │ 303.82 MiB │ 794.26 MiB   │
+5. │ d.orders   │ 65.38 MiB  │ 175.83 MiB   │
+6. │ d.part     │ 10.70 MiB  │ 30.60 MiB    │
+   └────────────┴────────────┴──────────────┘

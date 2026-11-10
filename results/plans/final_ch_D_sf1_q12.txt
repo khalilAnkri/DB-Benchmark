@@ -1,0 +1,49 @@
+Output: l_shipmode, countIf(o_orderpriority IN ('1-URGENT', '2-HIGH')), countIf(o_orderpriority NOT IN ('1-URGENT', '2-HIGH'))
+
+Sorting (Sorting for ORDER BY)
+│  Sort description: l_shipmode ASC
+└──Aggregating
+   │  Keys: l_shipmode
+   │  Aggregates: countIf(o_orderpriority IN ('1-URGENT', '2-HIGH')), countIf(o_orderpriority NOT IN ('1-URGENT', '2-HIGH'))
+   │  Skip merging: 0
+   └──Join (JOIN FillRightFirst)
+      │  orders[163350] ⋈ lineitem[26622]
+      │  Type: inner | Strictness: all | Algorithm: SpillingHashJoin(HashJoin)
+      │  Result rows: 26622
+      │  Join conditions: o_orderkey = l_orderkey
+      │  Output:
+      │    Left:  o_orderpriority
+      │    Right: l_shipmode
+      ├──Filter
+      │  │  Filter column: indexHint() AND indexHint() AND 
+      │  └──ReadFromMergeTree (d.orders)
+      │        Read type: Default
+      │        Parts: 1 | Granules: 184
+      │        Output: o_orderkey, , o_orderpriority
+      │        Runtime filters: RF1(o_orderkey, l_orderkey from d.lineitem)
+      │        Indexes:
+      │          PrimaryKey
+      │            Condition: true
+      │            Parts: 1/1
+      │            Granules: 184/184
+      │          Ranges: 1
+      └──BuildRuntimeFilter (Build runtime join filter on l_orderkey)
+         │  Filter id: RF1
+         │  Source table: d.lineitem
+         └──Filter ((WHERE + Change column names to column identifiers))
+            │  Filter column: in(l_shipmode, __set_String_15867086455827095087_11900573322730802812) AND less(l_commitdate, l_receiptdate) AND less(l_shipdate, l_commitdate) AND greaterOrEquals(l_receiptdate, _CAST(8766_Date, 'Date'_String)) AND less(l_receiptdate, _CAST(9131_Date, 'Date'_String)) AND indexHint() AND indexHint()
+            └──ReadFromMergeTree (d.lineitem)
+                  Read type: Default
+                  Parts: 1 | Granules: 315
+                  Output: l_shipmode, in(l_shipmode, __set_String_15867086455827095087_11900573322730802812), less(l_commitdate, l_receiptdate), less(l_shipdate, l_commitdate), greaterOrEquals(l_receiptdate, _CAST(8766_Date, 'Date'_String)), less(l_receiptdate, _CAST(9131_Date, 'Date'_String)), l_orderkey
+                  Prewhere filter
+                  Prewhere filter column:  l_shipdate < l_commitdate AND l_shipmode IN ('MAIL', 'SHIP') AND l_commitdate < l_receiptdate AND l_receiptdate < '1995-01-01' AND l_receiptdate >= '1994-01-01'
+                  Indexes:
+                    PrimaryKey
+                      Keys:
+                        l_shipdate
+                      Condition: (l_shipdate in (-Inf, 9130])
+                      Parts: 1/1
+                      Granules: 315/734
+                      Search Algorithm: binary search
+                    Ranges: 1

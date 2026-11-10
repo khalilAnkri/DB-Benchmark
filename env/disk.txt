@@ -1,2 +1,2 @@
 Filesystem      Size  Used Avail Use% Mounted on
-/dev/sdc        251G  3.1G  236G   2% /
+/dev/sdc        251G  4.9G  234G   3% /

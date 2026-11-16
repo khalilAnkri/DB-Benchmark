@@ -1,0 +1,37 @@
+Finalize Aggregate  (cost=633807.91..633807.93 rows=1 width=32) (actual time=1211.439..1236.380 rows=1.00 loops=1)
+  Buffers: shared hit=42 read=49588
+  ->  Gather  (cost=633807.57..633807.88 rows=3 width=64) (actual time=1199.792..1236.321 rows=4.00 loops=1)
+        Workers Planned: 3
+        Workers Launched: 3
+        Buffers: shared hit=42 read=49588
+        ->  Partial Aggregate  (cost=632807.57..632807.58 rows=1 width=64) (actual time=1136.921..1136.925 rows=1.00 loops=4)
+              Buffers: shared hit=42 read=49588
+              ->  Parallel Hash Join  (cost=51885.82..628417.07 rows=250885 width=33) (actual time=878.108..1068.995 rows=187305.75 loops=4)
+                    Hash Cond: (lineitem.l_partkey = part.p_partkey)
+                    Buffers: shared hit=42 read=49588
+                    ->  Parallel Bitmap Heap Scan on lineitem  (cost=225.74..576098.42 rows=250885 width=16) (actual time=21.769..82.479 rows=187305.75 loops=4)
+                          Recheck Cond: ((l_shipdate >= '1995-09-01'::date) AND (l_shipdate < '1995-10-01'::date))
+                          Rows Removed by Index Recheck: 1585
+                          Heap Blocks: lossy=3258
+                          Buffers: shared hit=42 read=12444
+                          Worker 0:  Heap Blocks: lossy=3166
+                          Worker 1:  Heap Blocks: lossy=2767
+                          Worker 2:  Heap Blocks: lossy=3225
+                          ->  Bitmap Index Scan on lineitem_shipdate_brin  (cost=0.00..31.30 rows=778872 width=0) (actual time=21.413..21.413 rows=124160.00 loops=1)
+                                Index Cond: ((l_shipdate >= '1995-09-01'::date) AND (l_shipdate < '1995-10-01'::date))
+                                Index Searches: 1
+                                Buffers: shared hit=42 read=28
+                    ->  Parallel Hash  (cost=43595.59..43595.59 rows=645159 width=25) (actual time=851.857..851.858 rows=500000.00 loops=4)
+                          Buckets: 2097152  Batches: 1  Memory Usage: 137312kB
+                          Buffers: shared read=37144
+                          ->  Parallel Seq Scan on part  (cost=0.00..43595.59 rows=645159 width=25) (actual time=337.925..548.470 rows=500000.00 loops=4)
+                                Buffers: shared read=37144
+Settings: effective_cache_size = '6GB', work_mem = '256MB', max_parallel_workers_per_gather = '3', max_parallel_workers = '4', random_page_cost = '1.1', search_path = 'd,b'
+Planning:
+  Buffers: shared hit=2 read=7
+Planning Time: 3.600 ms
+JIT:
+  Functions: 62
+  Options: Inlining true, Optimization true, Expressions true, Deforming true
+  Timing: Generation 13.987 ms (Deform 2.449 ms), Inlining 431.588 ms, Optimization 515.855 ms, Emission 391.167 ms, Total 1352.597 ms
+Execution Time: 1239.331 ms

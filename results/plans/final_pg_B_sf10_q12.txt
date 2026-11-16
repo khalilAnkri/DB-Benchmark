@@ -1,0 +1,36 @@
+Finalize GroupAggregate  (cost=1577303.80..1578685.94 rows=7 width=21) (actual time=7984.359..8057.579 rows=2.00 loops=1)
+  Group Key: lineitem.l_shipmode
+  Buffers: shared hit=1163053 read=1065611
+  ->  Gather Merge  (cost=1577303.80..1578685.71 rows=22 width=21) (actual time=7975.137..8057.458 rows=8.00 loops=1)
+        Workers Planned: 3
+        Workers Launched: 3
+        Buffers: shared hit=1163053 read=1065611
+        ->  Partial GroupAggregate  (cost=1576303.76..1577683.08 rows=7 width=21) (actual time=7920.597..7931.348 rows=2.00 loops=4)
+              Group Key: lineitem.l_shipmode
+              Buffers: shared hit=1163053 read=1065611
+              ->  Sort  (cost=1576303.76..1576533.64 rows=91950 width=14) (actual time=7911.155..7915.554 rows=77700.75 loops=4)
+                    Sort Key: lineitem.l_shipmode
+                    Sort Method: quicksort  Memory: 5662kB
+                    Buffers: shared hit=1163053 read=1065611
+                    Worker 0:  Sort Method: quicksort  Memory: 5639kB
+                    Worker 1:  Sort Method: quicksort  Memory: 5584kB
+                    Worker 2:  Sort Method: quicksort  Memory: 5601kB
+                    ->  Nested Loop  (cost=0.43..1568723.15 rows=91950 width=14) (actual time=352.171..7856.658 rows=77700.75 loops=4)
+                          Buffers: shared hit=1163029 read=1065611
+                          ->  Parallel Seq Scan on lineitem  (cost=0.00..1420816.72 rows=91950 width=9) (actual time=351.956..6106.568 rows=77700.75 loops=4)
+                                Filter: (((l_shipmode)::text = ANY ('{MAIL,SHIP}'::text[])) AND (l_commitdate < l_receiptdate) AND (l_shipdate < l_commitdate) AND (l_receiptdate >= '1994-01-01'::date) AND (l_receiptdate < '1995-01-01'::date))
+                                Rows Removed by Filter: 14918812
+                                Buffers: shared hit=15336 read=970089
+                          ->  Index Scan using orders_pkey on orders  (cost=0.43..1.61 rows=1 width=13) (actual time=0.021..0.021 rows=1.00 loops=310803)
+                                Index Cond: (o_orderkey = lineitem.l_orderkey)
+                                Index Searches: 310803
+                                Buffers: shared hit=1147693 read=95522
+Settings: effective_cache_size = '6GB', work_mem = '256MB', max_parallel_workers_per_gather = '3', max_parallel_workers = '4', random_page_cost = '1.1', search_path = 'b'
+Planning:
+  Buffers: shared hit=8 read=10
+Planning Time: 2.499 ms
+JIT:
+  Functions: 55
+  Options: Inlining true, Optimization true, Expressions true, Deforming true
+  Timing: Generation 6.988 ms (Deform 3.310 ms), Inlining 397.695 ms, Optimization 576.438 ms, Emission 429.904 ms, Total 1411.025 ms
+Execution Time: 8059.665 ms

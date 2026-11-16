@@ -1,0 +1,45 @@
+=== Scale factor 10, 2026-11-16T17:27:23+01:00 ===
+--- PostgreSQL: physical order of l_shipdate (correlation, 1 = sorted)
+ design | correlation 
+--------+-------------
+ b      |       0.003
+ d      |       1.000
+(2 rows)
+
+--- PostgreSQL: size per table (heap = table only, total = with indexes)
+    tbl     | heap_bytes |  heap   | total_bytes |  total  
+------------+------------+---------+-------------+---------
+ b.lineitem | 8072527872 | 7699 MB |  9422209024 | 8986 MB
+ b.orders   | 2065661952 | 1970 MB |  2403196928 | 2292 MB
+ b.part     |  304283648 | 290 MB  |   349347840 | 333 MB
+ d.lineitem | 8074559488 | 7701 MB |  9424478208 | 8988 MB
+(4 rows)
+
+--- ClickHouse: size per table
+   ┌─tbl────────┬─compressed_bytes─┬─compressed─┬─uncompressed_bytes─┬─uncompressed─┬─parts─┐
+1. │ b.lineitem │       3174306876 │ 2.96 GiB   │         8325238361 │ 7.75 GiB     │     1 │
+2. │ b.orders   │        699276719 │ 666.88 MiB │         1843420068 │ 1.72 GiB     │     1 │
+3. │ b.part     │        112098095 │ 106.91 MiB │          320857102 │ 305.99 MiB   │     1 │
+4. │ d.lineitem │       3230111219 │ 3.01 GiB   │         8325238361 │ 7.75 GiB     │     1 │
+5. │ d.orders   │        699276639 │ 666.88 MiB │         1843410771 │ 1.72 GiB     │     1 │
+6. │ d.part     │        112098095 │ 106.91 MiB │          320857102 │ 305.99 MiB   │     1 │
+   └────────────┴──────────────────┴────────────┴────────────────────┴──────────────┴───────┘
+--- ClickHouse: LINEITEM columns used by the queries (compressed)
+    ┌─name────────────┬─compressed─┬─uncompressed─┐
+ 1. │ l_comment       │ 812.80 MiB │ 1.93 GiB     │
+ 2. │ l_extendedprice │ 285.63 MiB │ 457.66 MiB   │
+ 3. │ l_shipinstruct  │ 252.33 MiB │ 1.12 GiB     │
+ 4. │ l_partkey       │ 229.81 MiB │ 228.83 MiB   │
+ 5. │ l_suppkey       │ 227.30 MiB │ 228.83 MiB   │
+ 6. │ l_shipmode      │ 217.85 MiB │ 702.83 MiB   │
+ 7. │ l_quantity      │ 168.94 MiB │ 457.66 MiB   │
+ 8. │ l_discount      │ 156.75 MiB │ 457.66 MiB   │
+ 9. │ l_tax           │ 153.47 MiB │ 457.66 MiB   │
+10. │ l_receiptdate   │ 114.87 MiB │ 114.41 MiB   │
+11. │ l_shipdate      │ 114.87 MiB │ 114.41 MiB   │
+12. │ l_commitdate    │ 114.65 MiB │ 114.41 MiB   │
+13. │ l_orderkey      │ 63.61 MiB  │ 228.83 MiB   │
+14. │ l_linenumber    │ 58.15 MiB  │ 228.83 MiB   │
+15. │ l_returnflag    │ 31.03 MiB  │ 514.86 MiB   │
+16. │ l_linestatus    │ 25.19 MiB  │ 514.86 MiB   │
+    └─────────────────┴────────────┴──────────────┘

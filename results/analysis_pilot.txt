@@ -1,0 +1,102 @@
+
+=== Medians (seconds), relative IQR, median bytes read from storage ===
+engine design  sf query cache  n  median_s    q1_s    q3_s  median_io_read_bytes  rel_iqr
+    ch      B   1    q1  cold  3    0.2713  0.2684  0.2897          9.822208e+07   0.0787
+    ch      B   1    q1  warm  3    0.2661  0.2567  0.3436          0.000000e+00   0.3267
+    ch      B   1   q12  cold  3    0.1300  0.1256  0.1314          7.877018e+07   0.0447
+    ch      B   1   q12  warm  3    0.1410  0.1240  0.1524          0.000000e+00   0.2016
+    ch      B   1   q14  cold  3    0.1395  0.1290  0.2181          8.523776e+07   0.6391
+    ch      B   1   q14  warm  3    0.0744  0.0662  0.1069          0.000000e+00   0.5460
+    ch      B   1    q6  cold  3    0.0948  0.0835  0.1268          7.619379e+07   0.4577
+    ch      B   1    q6  warm  3    0.0679  0.0608  0.0948          0.000000e+00   0.5004
+    ch      B  10    q1  cold  3    3.2834  3.2346  3.3036          9.815532e+08   0.0210
+    ch      B  10    q1  warm  3    3.1777  3.0699  3.1805          6.758400e+05   0.0348
+    ch      B  10   q12  cold  3    1.4200  1.2560  1.5152          7.879066e+08   0.1826
+    ch      B  10   q12  warm  3    1.2203  1.1768  1.3538          2.048000e+05   0.1450
+    ch      B  10   q14  cold  3    2.1502  1.4608  2.1629          8.806154e+08   0.3266
+    ch      B  10   q14  warm  3    0.7696  0.7538  0.9540          0.000000e+00   0.2601
+    ch      B  10    q6  cold  3    1.3831  1.1637  1.5345          7.615611e+08   0.2681
+    ch      B  10    q6  warm  3    0.6750  0.5751  0.7048          2.334720e+05   0.1923
+    ch      D   1    q1  warm  3    0.2214  0.2167  0.2239          0.000000e+00   0.0327
+    ch      D   1   q12  warm  3    0.0577  0.0510  0.0906          0.000000e+00   0.6866
+    ch      D   1   q14  warm  3    0.0236  0.0235  0.0357          0.000000e+00   0.5160
+    ch      D   1    q6  warm  3    0.0215  0.0180  0.0309          0.000000e+00   0.5995
+    ch      D  10    q1  warm  3    2.1317  2.0878  2.3554          0.000000e+00   0.1256
+    ch      D  10   q12  warm  3    0.4081  0.3787  0.4748          0.000000e+00   0.2356
+    ch      D  10   q14  warm  3    0.1384  0.1268  0.1516          0.000000e+00   0.1791
+    ch      D  10    q6  warm  3    0.1348  0.1241  0.1523          0.000000e+00   0.2095
+    pg      B   1    q1  cold  3    2.4064  2.4054  2.7258          9.393603e+08   0.1331
+    pg      B   1    q1  warm  3    1.8928  1.8736  1.9559          0.000000e+00   0.0435
+    pg      B   1   q12  cold  3    1.0144  0.9528  1.0409          1.179828e+09   0.0869
+    pg      B   1   q12  warm  3    0.5548  0.5458  0.5892          0.000000e+00   0.0782
+    pg      B   1   q14  cold  3    0.9271  0.7959  0.9859          9.699656e+08   0.2049
+    pg      B   1   q14  warm  3    0.3620  0.3572  0.3981          0.000000e+00   0.1131
+    pg      B   1    q6  cold  3    0.7107  0.6605  0.9859          9.391473e+08   0.4578
+    pg      B   1    q6  warm  3    0.3694  0.3460  0.3872          0.000000e+00   0.1116
+    pg      B  10    q1  cold  3   25.9394 25.3130 44.2678          8.207069e+09   0.7307
+    pg      B  10    q1  warm  3   29.6779 26.3014 31.5989          5.017457e+09   0.1785
+    pg      B  10   q12  cold  3   12.7774 11.1672 21.8044          1.064248e+10   0.8325
+    pg      B  10   q12  warm  3   27.5132 20.0255 37.2219          1.015023e+10   0.6250
+    pg      B  10   q14  cold  3   12.9673 12.5254 16.4519          8.544657e+09   0.3028
+    pg      B  10   q14  warm  3   17.5650 15.7638 19.4246          8.496316e+09   0.2084
+    pg      B  10    q6  cold  3   16.1555 12.2515 18.0939          8.206537e+09   0.3616
+    pg      B  10    q6  warm  3    9.3562  8.9375  9.6856          7.904285e+09   0.0800
+    pg      D   1    q1  warm  3    1.8279  1.8203  1.8991          0.000000e+00   0.0431
+    pg      D   1   q12  warm  3    0.5897  0.5802  0.6288          0.000000e+00   0.0826
+    pg      D   1   q14  warm  3    0.0747  0.0642  0.0836          0.000000e+00   0.2594
+    pg      D   1    q6  warm  3    0.1050  0.1014  0.1091          0.000000e+00   0.0738
+    pg      D  10    q1  warm  3   22.3575 21.1140 27.7852          7.048421e+09   0.2984
+    pg      D  10   q12  warm  3   23.1843 21.5680 23.9153          9.249743e+09   0.1012
+    pg      D  10   q14  warm  3    0.9772  0.9763  1.0198          4.325704e+08   0.0445
+    pg      D  10    q6  warm  3    1.6760  1.5353  1.7354          5.262787e+08   0.1194
+
+=== Speedup S = median_PG / median_CH with 95% bootstrap CI ===
+design  sf query cache      S  S_ci_low  S_ci_high  n_pg  n_ch
+     B   1    q1  cold  8.870     7.803     11.472     3     3
+     B   1    q1  warm  7.114     4.404      8.166     3     3
+     B   1   q12  cold  7.805     6.709      8.808     3     3
+     B   1   q12  warm  3.935     3.277      5.830     3     3
+     B   1   q14  cold  6.646     2.240      8.821     3     3
+     B   1   q14  warm  4.862     2.530      7.488     3     3
+     B   1    q6  cold  7.497     3.841     17.491     3     3
+     B   1    q6  warm  5.441     2.652      7.544     3     3
+     B  10    q1  cold  7.900     7.427     19.649     3     3
+     B  10    q1  warm  9.339     7.201     11.316     3     3
+     B  10   q12  cold  8.998     5.935     28.236     3     3
+     B  10   q12  warm 22.546     8.431     41.409     3     3
+     B  10   q14  cold  6.031     5.554     25.846     3     3
+     B  10   q14  warm 22.822    12.265     28.839     3     3
+     B  10    q6  cold 11.680     4.951     21.217     3     3
+     B  10    q6  warm 13.862    11.595     21.076     3     3
+     D   1    q1  warm  8.257     8.004      9.294     3     3
+     D   1   q12  warm 10.227     4.621     15.073     3     3
+     D   1   q14  warm  3.162     1.126      3.961     3     3
+     D   1    q6  warm  4.882     2.425      7.801     3     3
+     D  10    q1  warm 10.488     7.704     16.250     3     3
+     D  10   q12  warm 56.804    36.848     70.583     3     3
+     D  10   q14  warm  7.060     5.918      9.218     3     3
+     D  10    q6  warm 12.433     8.213     15.838     3     3
+
+=== Change of S between scale factors ===
+design query cache  sf_from  sf_to     r  r_ci_low  r_ci_high  r_per_doubling
+     B    q1  cold        1     10 0.891     0.670      2.441           0.966
+     B    q1  warm        1     10 1.313     0.942      2.391           1.085
+     B   q12  cold        1     10 1.153     0.760      3.697           1.044
+     B   q12  warm        1     10 5.730     1.898     11.357           1.691
+     B   q14  cold        1     10 0.907     0.684      6.992           0.971
+     B   q14  warm        1     10 4.694     2.060     10.642           1.593
+     B    q6  cold        1     10 1.558     0.454      3.825           1.143
+     B    q6  warm        1     10 2.548     1.688      6.760           1.325
+     D    q1  warm        1     10 1.270     0.894      1.968           1.075
+     D   q12  warm        1     10 5.554     2.862     13.906           1.676
+     D   q14  warm        1     10 2.233     1.514      6.269           1.274
+     D    q6  warm        1     10 2.547     1.265      5.677           1.325
+
+=== Decision table (design B, warm runs) ===
+query                         H1                                 H2a                                  H2b sizes_tested
+   q1 supported so far (partial) not testable yet (needs SF 1, 2, 4) not testable yet (needs SF 4 and 10)         1,10
+   q6 supported so far (partial) not testable yet (needs SF 1, 2, 4) not testable yet (needs SF 4 and 10)         1,10
+  q12 supported so far (partial) not testable yet (needs SF 1, 2, 4) not testable yet (needs SF 4 and 10)         1,10
+  q14 supported so far (partial) not testable yet (needs SF 1, 2, 4) not testable yet (needs SF 4 and 10)         1,10
+
+Files written to /home/khalil/DB-Benchmark/results

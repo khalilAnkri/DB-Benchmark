@@ -18,6 +18,6 @@ Sorting (Sorting for ORDER BY)
                l_shipdate
              Condition: (l_shipdate in (-Inf, 10471])
              Parts: 1/1
-             Granules: 723/734
+             Granules: 723/735
              Search Algorithm: binary search
            Ranges: 1

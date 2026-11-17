@@ -1,0 +1,18 @@
+Output: sum(l_extendedprice * l_discount)
+
+Aggregating
+│  Keys:
+│  Aggregates: sum(l_extendedprice * l_discount)
+│  Skip merging: 0
+└──ReadFromMergeTree (b.lineitem)
+      Read type: Default
+      Parts: 1 | Granules: 737
+      Output: l_discount, l_extendedprice
+      Prewhere filter
+      Prewhere filter column:  l_quantity < 24 AND l_discount <= '0.07' AND l_discount >= '0.05' AND l_shipdate < '1995-01-01' AND l_shipdate >= '1994-01-01'
+      Indexes:
+        PrimaryKey
+          Condition: true
+          Parts: 1/1
+          Granules: 737/737
+        Ranges: 1

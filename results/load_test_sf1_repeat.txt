@@ -1,0 +1,74 @@
+=== Fresh containers ===
+=== PostgreSQL, SF 1 ===
+ Container pg Creating 
+ Container pg Created 
+ Container pg Starting 
+ Container pg Started 
+/home/khalil/DB-Benchmark/data -> /data
+/var/lib/docker/volumes/db-benchmark_pgdata/_data -> /var/lib/postgresql
+
+NOTICE:  drop cascades to table d.lineitem
+NOTICE:  drop cascades to 3 other objects
+DETAIL:  drop cascades to table b.lineitem
+drop cascades to table b.orders
+drop cascades to table b.part
+--- COPY
+
+real	0m17.274s
+user	0m0.009s
+sys	0m0.040s
+--- keys + VACUUM
+
+real	0m19.873s
+user	0m0.037s
+sys	0m0.020s
+--- design D
+
+real	0m29.997s
+user	0m0.022s
+sys	0m0.019s
+     t      |  count  |     sum      |       sum       
+------------+---------+--------------+-----------------
+ b.part     |  200000 |              |                
+ b.orders   | 1500000 |              |                
+ b.lineitem | 6001215 | 153078795.00 | 229577310901.20
+ d.lineitem | 6001215 | 153078795.00 | 229577310901.20
+(4 rows)
+
+ Container pg Stopping 
+ Container pg Stopped 
+=== ClickHouse, SF 1 ===
+ Container ch Creating 
+ Container ch Created 
+ Container ch Starting 
+ Container ch Started 
+/home/khalil/DB-Benchmark/data -> /data
+/var/lib/docker/volumes/db-benchmark_chdata/_data -> /var/lib/clickhouse
+/home/khalil/DB-Benchmark/config/clickhouse/bench.xml -> /etc/clickhouse-server/users.d/bench.xml
+
+--- INSERT
+
+real	0m7.525s
+user	0m0.211s
+sys	0m0.882s
+--- OPTIMIZE
+
+real	0m4.979s
+user	0m0.010s
+sys	0m0.022s
+--- design D
+
+real	0m14.572s
+user	0m0.009s
+sys	0m0.021s
+   ┌─t──────────┬─count()─┬─sum(l_quantity)─┬─sum(l_extendedprice)─┐
+1. │ b.lineitem │ 6001215 │       153078795 │       229577310901.2 │ -- 229.58 billion
+2. │ d.lineitem │ 6001215 │       153078795 │       229577310901.2 │ -- 229.58 billion
+   └────────────┴─────────┴─────────────────┴──────────────────────┘
+   ┌─t────────┬─count()─┐
+1. │ b.orders │ 1500000 │ -- 1.50 million
+2. │ b.part   │  200000 │
+   └──────────┴─────────┘
+ Container ch Stopping 
+ Container ch Stopped 
+=== Done ===

@@ -1,0 +1,5 @@
+query,H1,H2a,H2b,sizes_tested
+q1,supported so far (partial),"not testable yet (needs SF 1, 2, 4)",not testable yet (needs SF 4 and 10),1
+q6,supported so far (partial),"not testable yet (needs SF 1, 2, 4)",not testable yet (needs SF 4 and 10),1
+q12,supported so far (partial),"not testable yet (needs SF 1, 2, 4)",not testable yet (needs SF 4 and 10),1
+q14,supported so far (partial),"not testable yet (needs SF 1, 2, 4)",not testable yet (needs SF 4 and 10),1

@@ -16,6 +16,6 @@ Aggregating
             l_shipdate
           Condition: and((l_shipdate in (-Inf, 9130]), (l_shipdate in [8766, +Inf)))
           Parts: 1/1
-          Granules: 112/734
+          Granules: 112/735
           Search Algorithm: binary search
         Ranges: 1

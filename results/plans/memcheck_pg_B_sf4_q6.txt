@@ -1,0 +1,19 @@
+Finalize Aggregate  (cost=570108.95..570108.96 rows=1 width=32) (actual time=2678.775..2727.664 rows=1.00 loops=1)
+  Buffers: shared hit=61056 read=333128
+  ->  Gather  (cost=570108.62..570108.93 rows=3 width=32) (actual time=2651.566..2725.501 rows=4.00 loops=1)
+        Workers Planned: 3
+        Workers Launched: 3
+        Buffers: shared hit=61056 read=333128
+        ->  Partial Aggregate  (cost=569108.62..569108.63 rows=1 width=32) (actual time=2604.933..2606.703 rows=1.00 loops=4)
+              Buffers: shared hit=61056 read=333128
+              ->  Parallel Seq Scan on lineitem  (cost=0.00..568359.98 rows=149727 width=12) (actual time=190.658..2576.120 rows=114031.25 loops=4)
+                    Filter: ((l_shipdate >= '1994-01-01'::date) AND (l_shipdate < '1995-01-01'::date) AND (l_discount >= 0.05) AND (l_discount <= 0.07) AND (l_quantity < '24'::numeric))
+                    Rows Removed by Filter: 5885120
+                    Buffers: shared hit=61056 read=333128
+Settings: effective_cache_size = '6GB', work_mem = '256MB', max_parallel_workers_per_gather = '3', max_parallel_workers = '4', random_page_cost = '1.1', search_path = 'b'
+Planning Time: 0.103 ms
+JIT:
+  Functions: 22
+  Options: Inlining true, Optimization true, Expressions true, Deforming true
+  Timing: Generation 5.834 ms (Deform 0.787 ms), Inlining 316.592 ms, Optimization 238.617 ms, Emission 205.626 ms, Total 766.670 ms
+Execution Time: 2732.088 ms

@@ -1,0 +1,11 @@
+26.8.36.3
+cancel_http_readonly_queries_on_client_close | 1
+cast_string_to_dynamic_use_inference | 1
+database | b
+http_headers_progress_interval_ms | 120000
+max_memory_usage | 6442450944
+max_threads | 4
+send_progress_in_http_headers | 1
+use_query_cache | 0
+use_query_condition_cache | 0
+use_uncompressed_cache | 0

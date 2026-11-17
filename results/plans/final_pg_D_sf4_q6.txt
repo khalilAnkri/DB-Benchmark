@@ -1,0 +1,31 @@
+Finalize Aggregate  (cost=422641.15..422641.16 rows=1 width=32) (actual time=296.728..308.812 rows=1.00 loops=1)
+  Buffers: shared hit=60107
+  ->  Gather  (cost=422640.82..422641.13 rows=3 width=32) (actual time=296.532..308.786 rows=4.00 loops=1)
+        Workers Planned: 3
+        Workers Launched: 3
+        Buffers: shared hit=60107
+        ->  Partial Aggregate  (cost=421640.82..421640.83 rows=1 width=32) (actual time=282.135..282.137 rows=1.00 loops=4)
+              Buffers: shared hit=60107
+              ->  Parallel Bitmap Heap Scan on lineitem  (cost=142.65..420900.96 rows=147971 width=12) (actual time=8.219..257.160 rows=114031.25 loops=4)
+                    Recheck Cond: ((l_shipdate >= '1994-01-01'::date) AND (l_shipdate < '1995-01-01'::date))
+                    Rows Removed by Index Recheck: 3197
+                    Filter: ((l_discount >= 0.05) AND (l_discount <= 0.07) AND (l_quantity < '24'::numeric))
+                    Rows Removed by Filter: 796124
+                    Heap Blocks: lossy=18265
+                    Buffers: shared hit=60107
+                    Worker 0:  Heap Blocks: lossy=14602
+                    Worker 1:  Heap Blocks: lossy=13394
+                    Worker 2:  Heap Blocks: lossy=13771
+                    ->  Bitmap Index Scan on lineitem_shipdate_brin  (cost=0.00..27.98 rows=3644816 width=0) (actual time=2.612..2.612 rows=600320.00 loops=1)
+                          Index Cond: ((l_shipdate >= '1994-01-01'::date) AND (l_shipdate < '1995-01-01'::date))
+                          Index Searches: 1
+                          Buffers: shared hit=15
+Settings: effective_cache_size = '6GB', work_mem = '256MB', max_parallel_workers_per_gather = '3', max_parallel_workers = '4', random_page_cost = '1.1', search_path = 'd,b'
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.084 ms
+JIT:
+  Functions: 30
+  Options: Inlining false, Optimization false, Expressions true, Deforming true
+  Timing: Generation 2.486 ms (Deform 1.058 ms), Inlining 0.000 ms, Optimization 1.384 ms, Emission 27.961 ms, Total 31.831 ms
+Execution Time: 309.629 ms

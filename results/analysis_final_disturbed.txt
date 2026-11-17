@@ -1,0 +1,51 @@
+
+=== Medians (seconds), relative IQR, median bytes read from storage ===
+engine design  sf query cache  n  median_s    q1_s    q3_s  median_io_read_bytes  rel_iqr
+    ch      B   4    q1  cold  5    1.4705  1.4489  1.7220           392646656.0   0.1858
+    ch      B   4    q1  warm 30    1.2592  1.1845  1.3421                   0.0   0.1252
+    ch      B   4   q12  cold  5    0.6335  0.5845  0.6635           314871808.0   0.1247
+    ch      B   4   q12  warm 30    0.4713  0.4313  0.5102                   0.0   0.1675
+    ch      B   4   q14  cold  5    0.4298  0.4158  0.4866           341008384.0   0.1648
+    ch      B   4   q14  warm 30    0.3041  0.2875  0.3412                   0.0   0.1766
+    ch      B   4    q6  cold  5    0.3561  0.3304  0.3883           304640000.0   0.1626
+    ch      B   4    q6  warm 30    0.2720  0.2450  0.3107                   0.0   0.2414
+    ch      D   4    q1  warm 30    1.1666  1.1040  1.2652                   0.0   0.1381
+    ch      D   4   q12  warm 30    0.2026  0.1867  0.2358                   0.0   0.2425
+    ch      D   4   q14  warm 30    0.0731  0.0657  0.0839                   0.0   0.2490
+    ch      D   4    q6  warm 30    0.0569  0.0483  0.0653                   0.0   0.2982
+    pg      B   4    q1  cold  5   13.1607 12.9139 13.8587          3364081664.0   0.0718
+    pg      B   4    q1  warm 30    8.3164  6.6916 10.2424                   0.0   0.4270
+    pg      B   4   q12  cold  5    5.4271  4.7833  6.9798          4325294080.0   0.4047
+    pg      B   4   q12  warm 30    2.2584  1.7345  2.8380                   0.0   0.4886
+    pg      B   4   q14  cold  5    4.4357  4.3227  5.3318          3485802496.0   0.2275
+    pg      B   4   q14  warm 30    1.6395  1.2742  2.1029                   0.0   0.5054
+    pg      B   4    q6  cold  5    3.9056  3.6548  4.1314          3363549184.0   0.1220
+    pg      B   4    q6  warm 30    1.4684  1.0959  1.7911                   0.0   0.4734
+    pg      D   4    q1  warm 30    8.0863  7.8648  8.6534                   0.0   0.0975
+    pg      D   4   q12  warm 30    2.2084  2.0998  2.3376                   0.0   0.1076
+    pg      D   4   q14  warm 30    0.2517  0.2277  0.2941                   0.0   0.2640
+    pg      D   4    q6  warm 30    0.3666  0.3441  0.4443                   0.0   0.2734
+
+=== Speedup S = median_PG / median_CH with 95% bootstrap CI ===
+design  sf query cache      S  S_ci_low  S_ci_high  n_pg  n_ch
+     B   4    q1  cold  8.950     7.192     20.203     5     5
+     B   4    q1  warm  6.604     5.513      7.598    30    30
+     B   4   q12  cold  8.567     6.613     14.459     5     5
+     B   4   q12  warm  4.792     3.702      5.731    30    30
+     B   4   q14  cold 10.320     8.655     14.098     5     5
+     B   4   q14  warm  5.391     4.280      6.824    30    30
+     B   4    q6  cold 10.968     8.168     16.966     5     5
+     B   4    q6  warm  5.399     4.057      6.255    30    30
+     D   4    q1  warm  6.931     6.470      7.230    30    30
+     D   4   q12  warm 10.899     9.895     11.784    30    30
+     D   4   q14  warm  3.445     2.980      4.087    30    30
+     D   4    q6  warm  6.444     5.689      7.778    30    30
+
+=== Decision table (design B, warm runs) ===
+query                         H1                                 H2a                                  H2b sizes_tested
+   q1 supported so far (partial) not testable yet (needs SF 1, 2, 4) not testable yet (needs SF 4 and 10)            4
+   q6 supported so far (partial) not testable yet (needs SF 1, 2, 4) not testable yet (needs SF 4 and 10)            4
+  q12 supported so far (partial) not testable yet (needs SF 1, 2, 4) not testable yet (needs SF 4 and 10)            4
+  q14 supported so far (partial) not testable yet (needs SF 1, 2, 4) not testable yet (needs SF 4 and 10)            4
+
+Files written to /home/khalil/DB-Benchmark/results

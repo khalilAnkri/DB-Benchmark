@@ -1,5 +1,5 @@
 query,H1,H2a,H2b,sizes_tested
-q1,supported so far (partial),"not testable yet (needs SF 1, 2, 4)",not testable yet (needs SF 4 and 10),"1,10"
-q6,supported so far (partial),"not testable yet (needs SF 1, 2, 4)",not testable yet (needs SF 4 and 10),"1,10"
-q12,supported so far (partial),"not testable yet (needs SF 1, 2, 4)",not testable yet (needs SF 4 and 10),"1,10"
-q14,supported so far (partial),"not testable yet (needs SF 1, 2, 4)",not testable yet (needs SF 4 and 10),"1,10"
+q1,supported so far (partial),"not testable yet (needs SF 1, 2, 4)",inconclusive,"1,4,10"
+q6,supported so far (partial),"not testable yet (needs SF 1, 2, 4)",supported if PG is out of memory and CH in memory at SF 10 (check io),"1,4,10"
+q12,supported so far (partial),"not testable yet (needs SF 1, 2, 4)",supported if PG is out of memory and CH in memory at SF 10 (check io),"1,4,10"
+q14,supported so far (partial),"not testable yet (needs SF 1, 2, 4)",supported if PG is out of memory and CH in memory at SF 10 (check io),"1,4,10"

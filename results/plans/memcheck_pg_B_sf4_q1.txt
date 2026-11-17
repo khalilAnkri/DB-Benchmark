@@ -1,0 +1,32 @@
+Finalize GroupAggregate  (cost=759427.61..759430.64 rows=6 width=236) (actual time=8041.923..8123.511 rows=4.00 loops=1)
+  Group Key: l_returnflag, l_linestatus
+  Buffers: shared hit=59928 read=334280
+  ->  Gather Merge  (cost=759427.61..759429.86 rows=19 width=236) (actual time=8041.848..8123.421 rows=16.00 loops=1)
+        Workers Planned: 3
+        Workers Launched: 3
+        Buffers: shared hit=59928 read=334280
+        ->  Sort  (cost=758427.57..758427.59 rows=6 width=236) (actual time=7986.344..7986.350 rows=4.00 loops=4)
+              Sort Key: l_returnflag, l_linestatus
+              Sort Method: quicksort  Memory: 26kB
+              Buffers: shared hit=59928 read=334280
+              Worker 0:  Sort Method: quicksort  Memory: 26kB
+              Worker 1:  Sort Method: quicksort  Memory: 26kB
+              Worker 2:  Sort Method: quicksort  Memory: 26kB
+              ->  Partial HashAggregate  (cost=758427.36..758427.50 rows=6 width=236) (actual time=7979.421..7979.441 rows=4.00 loops=4)
+                    Group Key: l_returnflag, l_linestatus
+                    Batches: 1  Memory Usage: 32kB
+                    Buffers: shared hit=59904 read=334280
+                    Worker 0:  Batches: 1  Memory Usage: 32kB
+                    Worker 1:  Batches: 1  Memory Usage: 32kB
+                    Worker 2:  Batches: 1  Memory Usage: 32kB
+                    ->  Parallel Seq Scan on lineitem  (cost=0.00..490948.44 rows=7642255 width=25) (actual time=453.021..1737.288 rows=5914796.00 loops=4)
+                          Filter: (l_shipdate <= '1998-09-02 00:00:00'::timestamp without time zone)
+                          Rows Removed by Filter: 84355
+                          Buffers: shared hit=59904 read=334280
+Settings: effective_cache_size = '6GB', work_mem = '256MB', max_parallel_workers_per_gather = '3', max_parallel_workers = '4', random_page_cost = '1.1', search_path = 'b'
+Planning Time: 0.176 ms
+JIT:
+  Functions: 47
+  Options: Inlining true, Optimization true, Expressions true, Deforming true
+  Timing: Generation 5.683 ms (Deform 2.286 ms), Inlining 514.496 ms, Optimization 773.758 ms, Emission 521.801 ms, Total 1815.737 ms
+Execution Time: 8125.198 ms

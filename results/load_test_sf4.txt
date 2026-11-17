@@ -1,0 +1,76 @@
+=== Fresh containers ===
+=== PostgreSQL, SF 4 ===
+ Container pg Creating 
+ Container pg Created 
+ Container pg Starting 
+ Container pg Started 
+/home/khalil/DB-Benchmark/data -> /data
+/var/lib/docker/volumes/db-benchmark_pgdata/_data -> /var/lib/postgresql
+
+NOTICE:  drop cascades to table d.lineitem
+NOTICE:  drop cascades to 3 other objects
+DETAIL:  drop cascades to table b.lineitem
+drop cascades to table b.orders
+drop cascades to table b.part
+--- COPY
+
+real	1m47.948s
+user	0m0.071s
+sys	0m0.062s
+--- keys + VACUUM
+
+real	1m52.734s
+user	0m0.196s
+sys	0m0.406s
+--- design D
+
+real	2m43.876s
+user	0m0.102s
+sys	0m0.070s
+     t      |  count   |     sum      |       sum       
+------------+----------+--------------+-----------------
+ b.part     |   800000 |              |                
+ b.orders   |  6000000 |              |                
+ d.lineitem | 23996604 | 612025449.00 | 917859107503.79
+ b.lineitem | 23996604 | 612025449.00 | 917859107503.79
+(4 rows)
+
+ Container pg Stopping 
+ Container pg Stopped 
+=== ClickHouse, SF 4 ===
+ Container ch Creating 
+ Container ch Created 
+ Container ch Starting 
+ Container ch Started 
+/home/khalil/DB-Benchmark/data -> /data
+/var/lib/docker/volumes/db-benchmark_chdata/_data -> /var/lib/clickhouse
+/home/khalil/DB-Benchmark/config/clickhouse/bench.xml -> /etc/clickhouse-server/users.d/bench.xml
+
+--- INSERT
+
+real	0m54.398s
+user	0m1.265s
+sys	0m43.472s
+--- OPTIMIZE
+
+real	0m18.066s
+user	0m0.016s
+sys	0m0.018s
+--- design D
+
+real	1m2.871s
+user	0m0.010s
+sys	0m0.033s
+   ┌─t──────────┬──count()─┬─sum(l_quantity)─┬─sum(l_extendedprice)─┐
+1. │ b.lineitem │ 23996604 │       612025449 │      917859107503.79 │ -- 917.86 billion
+   └────────────┴──────────┴─────────────────┴──────────────────────┘
+   ┌─t──────────┬──count()─┬─sum(l_quantity)─┬─sum(l_extendedprice)─┐
+2. │ d.lineitem │ 23996604 │       612025449 │      917859107503.79 │ -- 917.86 billion
+   └────────────┴──────────┴─────────────────┴──────────────────────┘
+   ┌─t────────┬─count()─┐
+1. │ b.part   │  800000 │
+2. │ b.orders │ 6000000 │ -- 6.00 million
+   └──────────┴─────────┘
+ Container ch Stopping 
+ Container ch Stopped 
+=== Done ===

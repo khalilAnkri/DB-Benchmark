@@ -1,0 +1,10 @@
+# Memory-limit check (report Section 5.4): same data, 4 GB container limit.
+services:
+  postgres:
+    mem_limit: 4g
+    memswap_limit: 4g
+  clickhouse:
+    mem_limit: 4g
+    memswap_limit: 4g
+    volumes:
+      - ./config/clickhouse/mem4g.xml:/etc/clickhouse-server/users.d/mem4g.xml:ro
